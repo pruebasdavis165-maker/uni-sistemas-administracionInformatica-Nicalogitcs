@@ -1,0 +1,6 @@
+@NicaLogistics.API_HostAddress = http://localhost:5101
+
+GET {{NicaLogistics.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
