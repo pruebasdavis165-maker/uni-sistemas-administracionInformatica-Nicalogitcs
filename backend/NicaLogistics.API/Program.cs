@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NicaLogistics.Application.Interfaces;
 using NicaLogistics.Application.UseCases.Auth;
+using NicaLogistics.Application.UseCases.Catalog;
 using NicaLogistics.Infrastructure.Authentication;
 using NicaLogistics.Infrastructure.Persistence;
 using NicaLogistics.Infrastructure.Repositories;
@@ -24,6 +25,10 @@ builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<AuthService>();
+
+builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
+builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<CatalogService>();
 
 // 4. Configuración de Autenticación JWT
 var jwtSection = builder.Configuration.GetSection("JwtSettings");
