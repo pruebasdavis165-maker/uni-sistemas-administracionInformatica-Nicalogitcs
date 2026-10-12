@@ -15,6 +15,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Cliente> Clientes => Set<Cliente>();
     public DbSet<Producto> Productos => Set<Producto>();
     public DbSet<Categoria> Categorias => Set<Categoria>();
+    public DbSet<Pedido> Pedidos => Set<Pedido>();
+    public DbSet<DetallePedido> DetallesPedido => Set<DetallePedido>();
+    public DbSet<Envio> Envios => Set<Envio>();
+    public DbSet<Pago> Pagos => Set<Pago>();
+    public DbSet<Encomienda> Encomiendas => Set<Encomienda>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

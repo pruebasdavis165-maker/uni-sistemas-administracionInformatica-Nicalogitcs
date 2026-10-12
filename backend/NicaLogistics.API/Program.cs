@@ -6,6 +6,9 @@ using Microsoft.OpenApi.Models;
 using NicaLogistics.Application.Interfaces;
 using NicaLogistics.Application.UseCases.Auth;
 using NicaLogistics.Application.UseCases.Catalog;
+using NicaLogistics.Application.UseCases.Encomiendas;
+using NicaLogistics.Application.UseCases.Orders;
+using NicaLogistics.Application.UseCases.Payments;
 using NicaLogistics.Infrastructure.Authentication;
 using NicaLogistics.Infrastructure.Persistence;
 using NicaLogistics.Infrastructure.Repositories;
@@ -14,6 +17,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 1. Controladores
 builder.Services.AddControllers();
+
+// CORS para el frontend Next.js
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+        policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 
 // 2. Conexión a Base de Datos PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -29,6 +41,16 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddScoped<CatalogService>();
+
+builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
+builder.Services.AddScoped<IPedidoService, PedidoService>();
+builder.Services.AddScoped<PedidoService>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPagoRepository, PagoRepository>();
+builder.Services.AddScoped<IEncomiendaRepository, EncomiendaRepository>();
+builder.Services.AddScoped<IPagoService, PagoService>();
+builder.Services.AddScoped<IEncomiendaService, EncomiendaService>();
 
 // 4. Configuración de Autenticación JWT
 var jwtSection = builder.Configuration.GetSection("JwtSettings");
@@ -111,6 +133,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("Frontend");
 
 // UseAuthentication DEBE ir antes de UseAuthorization
 app.UseAuthentication();
