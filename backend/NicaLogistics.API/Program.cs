@@ -16,6 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
 // 1. Controladores
 builder.Services.AddControllers();
 
+// CORS para el frontend Next.js
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+        policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 // 2. Conexión a Base de Datos PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -116,6 +125,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("Frontend");
 
 // UseAuthentication DEBE ir antes de UseAuthorization
 app.UseAuthentication();

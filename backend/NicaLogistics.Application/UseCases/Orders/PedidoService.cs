@@ -107,6 +107,12 @@ public class PedidoService : IPedidoService
         return pedidos.Select(p => MapToDto(p)).ToList();
     }
 
+    public async Task<IReadOnlyList<PedidoDto>> GetTodosPedidosAsync(CancellationToken cancellationToken = default)
+    {
+        var pedidos = await _pedidoRepository.GetAllAsync(cancellationToken);
+        return pedidos.Select(p => MapToDto(p)).ToList();
+    }
+
     public async Task<PedidoDto> ActualizarEstadoEnvioAsync(
         int idPedido,
         ActualizarEstadoEnvioRequest request,

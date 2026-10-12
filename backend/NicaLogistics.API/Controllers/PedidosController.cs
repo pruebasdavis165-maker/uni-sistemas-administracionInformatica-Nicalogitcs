@@ -48,6 +48,17 @@ public class PedidosController : ControllerBase
         }
     }
 
+    [HttpGet]
+    [Authorize(Roles = "Administrador")]
+    [ProducesResponseType(typeof(IReadOnlyList<PedidoDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> GetTodosPedidos(CancellationToken cancellationToken)
+    {
+        var pedidos = await _pedidoService.GetTodosPedidosAsync(cancellationToken);
+        return Ok(pedidos);
+    }
+
     [HttpGet("mis-pedidos")]
     [ProducesResponseType(typeof(IReadOnlyList<PedidoDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
