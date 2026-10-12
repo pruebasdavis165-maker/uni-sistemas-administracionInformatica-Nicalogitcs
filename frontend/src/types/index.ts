@@ -93,3 +93,46 @@ export const ESTADOS_ENVIO = [
 ] as const;
 
 export type EstadoEnvio = (typeof ESTADOS_ENVIO)[number];
+
+export interface Pago {
+  idPago: number;
+  idPedido: number;
+  fechaPago: string;
+  monto: number;
+  estado: "Pendiente" | "Completado" | "Cancelado" | "Reembolsado" | string;
+  metodoPago: string;
+  fechaReembolso: string | null;
+}
+
+export interface Encomienda {
+  idEncomienda: number;
+  idPedido: number;
+  origen: string;
+  destino: string;
+  estado: "Registrada" | "EnTransito" | "Entregada" | "Cancelada" | string;
+  fechaRegistro: string;
+  guiaRastreo?: string | null;
+}
+
+export interface RegistrarPagoRequest {
+  idPedido: number;
+  metodoPago: string;
+}
+
+export interface RegistrarPagoResponse {
+  pago: Pago;
+  encomienda: Encomienda;
+}
+
+export interface ActualizarEstadoEncomiendaRequest {
+  nuevoEstado: string;
+}
+
+export const ESTADOS_ENCOMIENDA = [
+  "Registrada",
+  "EnTransito",
+  "Entregada",
+] as const;
+
+export type EstadoEncomienda = (typeof ESTADOS_ENCOMIENDA)[number];
+

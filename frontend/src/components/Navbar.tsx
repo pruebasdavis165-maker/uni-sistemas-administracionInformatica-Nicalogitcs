@@ -58,6 +58,8 @@ export function Navbar() {
             <>
               <NavLink href="/admin/inventario">Inventario</NavLink>
               <NavLink href="/admin/envios">Envíos</NavLink>
+              <NavLink href="/admin/encomiendas">Encomiendas</NavLink>
+              <NavLink href="/admin/pagos">Pagos</NavLink>
             </>
           )}
         </nav>
